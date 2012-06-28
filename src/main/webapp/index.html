@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EventSource Demo</title>
+</head>
+<body>
+<h1>Server Time</h1>
+<time id="server-time">00:00:00</time>
+<br/>
+<small>(updates all 5 seconds)</small>
+
+<script type="text/javascript">
+(function() {
+    'use strict';
+    var timeSource = new EventSource('events/time'); // servlet from web.xml
+    timeSource.onmessage = function (event) {
+        var element = document.getElementById('server-time');
+        element.innerHTML = event.data;
+    };
+})();
+</script>
+</body>
+</html>
