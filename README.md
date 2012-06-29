@@ -1,0 +1,49 @@
+Kotlin Event Source Example
+===========================
+A small example on how to use [EventSource](http://dev.w3.org/html5/eventsource/) aka Server-Sent Events with Kotlin.
+
+You need [jetty-eventsource-servlet](https://github.com/jetty-project/jetty-eventsource-servlet) (released to Maven Central) then go to http://127.0.0.1:8080/kotlin-event-source-sample/ and you see the server time that gets updated all ten seconds. Not very useful but shows you how to use the API.
+
+Building
+--------
+You need to have the JetBrains repository in your `settings.xml` or proxy repository manager.
+
+```xml
+<repositories>
+    <repository>
+        <id>jetbrains-all</id>
+        <url>http://repository.jetbrains.com/all</url>
+    </repository>
+</repositories>
+
+<pluginRepositories>
+    <pluginRepository>
+        <id>jetbrains-all</id>
+        <url>http://repository.jetbrains.com/all</url>
+    </pluginRepository>
+</pluginRepositories>
+```
+
+Tomcat
+------
+To make the example work on Tomcat you need Tomcat 7 and have a NIO connector.
+
+```xml
+<Connector protocol="org.apache.coyote.http11.Http11NioProtocol" />
+```
+
+Check out the [the HTTP Connector reference](http://tomcat.apache.org/tomcat-7.0-doc/config/http.html) for more information.
+
+It's recommended that you use Tomcat 7.0.28 or newer otherwise you'll get chunking.
+
+Resin
+-----
+Does chunking but works out of the box.
+
+GlassFish
+---------
+Needs a not yet released version or a manual patch, see [GRIZZLY-1252](http://java.net/jira/browse/GRIZZLY-1252)
+
+Jetty
+-----
+Works out of the box, even on Jetty 7.
