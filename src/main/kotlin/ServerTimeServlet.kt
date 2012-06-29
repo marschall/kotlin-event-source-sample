@@ -7,6 +7,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeUnit.SECONDS
 import java.util.logging.Level
 import java.util.logging.Logger
 import javax.servlet.http.HttpServletRequest
@@ -24,7 +25,7 @@ class ServerTimeServlet: EventSourceServlet() {
     override fun init() {
         super.init()
         this.executor = Executors.newSingleThreadScheduledExecutor()
-        this.executor!!.scheduleAtFixedRate(UpdateSender(), 0, 5, TimeUnit.SECONDS)
+        this.executor!!.scheduleAtFixedRate(UpdateSender(), 0, 5, SECONDS)
     }
 
 
@@ -43,7 +44,6 @@ class ServerTimeServlet: EventSourceServlet() {
             val serverTime = formattedTime()
             for (emitter in emitters) {
                 try {
-                    LOG.info(serverTime)
                     emitter.data(serverTime)
                 } catch (e: IOException) {
                     LOG.log(Level.SEVERE, "could not send update to client", e)
